@@ -1,28 +1,37 @@
 # 📖 BookMaker
 
-Upload a PDF and download a **print-ready PDF imposed into pliegos (signatures)**,
-ready to fold, stack, and bind into a book.
+Impose a PDF into **pliegos (signatures)** — a print-ready booklet you fold,
+stack and bind into a book.
 
-Everything runs **in your browser** — the PDF never leaves your device, so there's
-no server and nothing to upload.
+Everything runs **in your browser**; the PDF never leaves your device. There is
+**no build step** — just open `index.html`.
+
+## Use it
+
+- **Locally:** double-click `index.html` (or open it in any browser). It works
+  straight from the file system.
+- **Hosted:** drop the whole folder on any static host (GitHub Pages, Netlify,
+  your own server). No build, no backend.
+
+Then: choose a PDF → pick the pliego size and options → **generate** → download.
 
 ## What it does
 
 Given any PDF, BookMaker performs **saddle-stitch imposition**:
 
-1. Pads the document with blank pages up to a multiple of the chosen pliego size.
+1. Pads the document with blank pages up to a multiple of the pliego size.
 2. Splits it into **pliegos (signatures)** of **8, 12, or 16 pages** each.
-3. Arranges (imposes) the pages 2-up on each side of every physical sheet so that
-   when you print double-sided, fold each pliego, stack the pliegos in order, and
-   bind them, the pages read `1 → N`.
+3. Imposes the pages 2-up on each side of every sheet so that when you print
+   double-sided, fold each pliego, stack the pliegos in order, and bind, the
+   pages read `1 → N`.
 
-A pliego is made of `pages ÷ 4` folded sheets (8 → 2 sheets, 12 → 3, 16 → 4).
+A pliego is `pages ÷ 4` folded sheets (8 → 2 sheets, 12 → 3, 16 → 4).
 
 ### Options
 
 - **Pages per pliego** — `8`, `12`, or `16`.
 - **Sheet size**
-  - **Keep page size** — the output sheet is double-width (e.g. A4 → A3 landscape);
+  - **Keep page size** — output sheet is double-width (e.g. A4 → A3 landscape);
     pages keep their original size.
   - **Fit same paper** — the sheet is one source page turned landscape with two
     pages scaled to fit (e.g. A4 → two A5 pages on one A4 sheet).
@@ -35,26 +44,25 @@ A pliego is made of `pages ÷ 4` folded sheets (8 → 2 sheets, 12 → 3, 16 →
 3. Fold each pliego in half.
 4. Stack the pliegos in order and bind the spine (staple, sew, or glue).
 
-## Develop
+## Files
+
+- `index.html` — the page.
+- `style.css` — design (ported from zuccarelli.xyz: warm paper, signal-cobalt
+  accent, Hanken Grotesk + JetBrains Mono).
+- `imposition.js` — the imposition engine (`signatureOrder`, `buildSheetPlan`,
+  `imposePdf`).
+- `app.js` — the UI (file input, drag & drop, options, download).
+- `vendor/pdf-lib.min.js` — vendored [pdf-lib](https://pdflib.js.org/), loaded
+  locally (no CDN needed).
+
+Fonts load from Google Fonts when online; if offline, the page falls back to
+system monospace/sans and stays fully functional.
+
+### Optional: run a local server
+
+Not required, but if you prefer serving over HTTP:
 
 ```bash
-npm install
-npm run dev        # start the dev server
-npm run build      # typecheck + production build into dist/
-npm run preview    # serve the production build
-npm run typecheck  # type-check only
+python3 -m http.server 8000
+# then open http://localhost:8000
 ```
-
-The site is a static bundle (`dist/`) and can be hosted on any static host
-(GitHub Pages, Netlify, etc.). `vite.config.ts` uses a relative `base` so it works
-from a subpath.
-
-## How it works
-
-- **`src/imposition.ts`** — the imposition engine (pure logic + `pdf-lib` layout).
-  - `signatureOrder(n)` returns the sheet ordering for one signature.
-  - `buildSheetPlan(total, size)` builds the duplex-ready plan for the whole doc.
-  - `imposePdf(bytes, options)` renders the final print-ready PDF.
-- **`src/main.ts`** — UI wiring (file input, drag & drop, options, download).
-
-Built with [pdf-lib](https://pdflib.js.org/) and [Vite](https://vitejs.dev/).
