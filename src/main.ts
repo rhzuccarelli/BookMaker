@@ -1,3 +1,6 @@
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/700.css';
 import './style.css';
 import { imposePdf, type SignatureSize, type LayoutMode, type ImposeResult } from './imposition';
 
@@ -8,8 +11,9 @@ const $ = <T extends HTMLElement>(sel: string): T => {
 };
 
 const fileInput = $<HTMLInputElement>('#file');
-const drop = $<HTMLLabelElement>('#drop');
-const fileInfo = $<HTMLSpanElement>('#fileInfo');
+const drop = $<HTMLDivElement>('#drop');
+const chooseBtn = $<HTMLButtonElement>('#chooseBtn');
+const fileInfo = $<HTMLParagraphElement>('#fileInfo');
 const generateBtn = $<HTMLButtonElement>('#generate');
 const statusEl = $<HTMLDivElement>('#status');
 const resultCard = $<HTMLElement>('#result');
@@ -76,6 +80,16 @@ function setFile(file: File | null) {
 }
 
 fileInput.addEventListener('change', () => setFile(fileInput.files?.[0] ?? null));
+
+// Explicit upload button.
+chooseBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  fileInput.click();
+});
+
+// The whole dropzone is also clickable (button clicks stop propagation above,
+// so they don't trigger this twice).
+drop.addEventListener('click', () => fileInput.click());
 
 ['dragenter', 'dragover'].forEach((evt) =>
   drop.addEventListener(evt, (e) => {
