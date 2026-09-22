@@ -7,7 +7,7 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E"
     />
-    <title>BookMaker — PDF booklet imposition</title>
+    <title>bookmaker — PDF booklet imposition</title>
     <meta
       name="description"
       content="Upload a PDF and download a print-ready PDF imposed into pliegos (signatures) for bookbinding."
@@ -16,83 +16,85 @@
   <body>
     <main class="app">
       <header class="hero">
-        <h1>📖 BookMaker</h1>
+        <p class="crumb"><span class="prompt">$</span> zuccarelli.xyz / bookmaker</p>
+        <h1>bookmaker</h1>
         <p class="tagline">
-          Turn any PDF into a print-ready booklet, imposed into
-          <strong>pliegos</strong> (signatures) you can fold, stack, and bind
-          into a book.
+          Turn a PDF into a print-ready booklet, imposed into
+          <span class="hl">pliegos</span> (signatures) you can fold, stack, and
+          bind into a book.
         </p>
-        <p class="privacy">
-          🔒 Your file never leaves your device — everything runs in your
-          browser.
-        </p>
+        <p class="privacy">// runs entirely in your browser — the file never leaves your device</p>
       </header>
 
-      <section class="card" aria-label="Upload">
-        <label id="drop" class="dropzone" for="file">
+      <section class="block" aria-label="Upload">
+        <h2 class="block-title"><span class="n">01</span> input</h2>
+        <div id="drop" class="dropzone">
           <input id="file" type="file" accept="application/pdf,.pdf" hidden />
-          <span class="drop-icon">⬆️</span>
-          <span class="drop-title">Drop a PDF here or click to choose</span>
-          <span id="fileInfo" class="drop-sub">No file selected</span>
-        </label>
+          <p class="drop-title">drop a PDF here</p>
+          <p class="drop-or">— or —</p>
+          <button type="button" id="chooseBtn" class="btn">choose file</button>
+          <p id="fileInfo" class="drop-sub">no file selected</p>
+        </div>
       </section>
 
-      <section class="card options" aria-label="Options">
+      <section class="block options" aria-label="Options">
+        <h2 class="block-title"><span class="n">02</span> options</h2>
+
         <div class="option">
-          <span class="option-label">Pages per pliego</span>
+          <span class="option-label">pages per pliego</span>
           <div class="segmented" id="sigSize" role="radiogroup" aria-label="Pages per pliego">
             <button type="button" data-value="8" role="radio" aria-checked="false">8</button>
             <button type="button" data-value="12" role="radio" aria-checked="false">12</button>
             <button type="button" data-value="16" role="radio" aria-checked="true" class="active">16</button>
           </div>
-          <p class="hint">Each pliego is folded from <span id="sheetsPerSig">4</span> sheet(s).</p>
+          <p class="hint">each pliego = <span id="sheetsPerSig">4</span> folded sheet(s)</p>
         </div>
 
         <div class="option">
-          <span class="option-label">Sheet size</span>
+          <span class="option-label">sheet size</span>
           <div class="segmented" id="layout" role="radiogroup" aria-label="Sheet size">
             <button type="button" data-value="spread" role="radio" aria-checked="true" class="active">
-              Keep page size
+              keep page size
             </button>
             <button type="button" data-value="fit" role="radio" aria-checked="false">
-              Fit same paper
+              fit same paper
             </button>
           </div>
           <p class="hint" id="layoutHint">
-            Double-width sheet (e.g. A4 → A3 landscape). Pages stay full size.
+            double-width sheet (e.g. A4 → A3 landscape); pages stay full size
           </p>
         </div>
 
-        <div class="option option-check">
+        <div class="option">
           <label class="check">
             <input type="checkbox" id="foldGuides" checked />
-            <span>Add fold line &amp; crop marks</span>
+            <span>add fold line &amp; crop marks</span>
           </label>
         </div>
       </section>
 
-      <section class="card actions">
-        <button id="generate" class="primary" disabled>Generate booklet PDF</button>
+      <section class="block actions" aria-label="Generate">
+        <button id="generate" class="btn btn-primary" disabled>generate booklet →</button>
         <div id="status" class="status" role="status" aria-live="polite"></div>
       </section>
 
-      <section id="result" class="card result" hidden>
-        <h2>Ready to print</h2>
+      <section id="result" class="block result" hidden>
+        <h2 class="block-title"><span class="n">03</span> output</h2>
         <ul id="summary" class="summary"></ul>
-        <a id="download" class="primary download" download>⬇️ Download imposed PDF</a>
+        <a id="download" class="btn btn-primary download" download>↓ download imposed PDF</a>
         <details class="howto">
-          <summary>How to print &amp; bind</summary>
+          <summary>how to print &amp; bind</summary>
           <ol>
-            <li>Print the PDF <strong>double-sided</strong> (flip on the short edge).</li>
-            <li>Keep the sheets in order. Every <span id="sheetsPerSig2">4</span> sheets = one pliego.</li>
-            <li>Fold each pliego in half.</li>
-            <li>Stack the pliegos in order and bind (staple, sew, or glue the spine).</li>
+            <li>print <strong>double-sided</strong> (flip on the short edge)</li>
+            <li>keep sheets in order — every <span id="sheetsPerSig2">4</span> sheets = one pliego</li>
+            <li>fold each pliego in half</li>
+            <li>stack the pliegos in order and bind the spine (staple, sew, or glue)</li>
           </ol>
         </details>
       </section>
 
       <footer class="foot">
-        <p>Runs entirely in your browser · Built with pdf-lib</p>
+        <p>built with pdf-lib · everything runs client-side</p>
       </footer>
     </main>
 
