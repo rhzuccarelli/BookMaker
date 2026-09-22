@@ -1,0 +1,19 @@
+{
+  "name": "bookmaker",
+  "version": "0.1.0",
+  "description": "Upload a PDF and generate a print-ready, imposed PDF split into pliegos (signatures) for bookbinding.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}
