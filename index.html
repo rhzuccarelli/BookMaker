@@ -12,6 +12,13 @@
       name="description"
       content="Impose a PDF into pliegos (signatures) — a print-ready booklet you can fold, stack and bind."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main class="page">
@@ -143,6 +150,9 @@
       </footer>
     </main>
 
-    <script type="module" src="/src/main.ts"></script>
+    <!-- Zero build: plain scripts that run when you just open this file. -->
+    <script src="vendor/pdf-lib.min.js"></script>
+    <script src="imposition.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
