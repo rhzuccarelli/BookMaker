@@ -7,94 +7,139 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E"
     />
-    <title>bookmaker — PDF booklet imposition</title>
+    <title>bookmaker · zuccarelli.xyz</title>
     <meta
       name="description"
-      content="Upload a PDF and download a print-ready PDF imposed into pliegos (signatures) for bookbinding."
+      content="Impose a PDF into pliegos (signatures) — a print-ready booklet you can fold, stack and bind."
     />
   </head>
   <body>
-    <main class="app">
-      <header class="hero">
-        <p class="crumb"><span class="prompt">$</span> zuccarelli.xyz / bookmaker</p>
-        <h1>bookmaker</h1>
-        <p class="tagline">
-          Turn a PDF into a print-ready booklet, imposed into
-          <span class="hl">pliegos</span> (signatures) you can fold, stack, and
-          bind into a book.
-        </p>
-        <p class="privacy">// runs entirely in your browser — the file never leaves your device</p>
+    <main class="page">
+      <!-- Masthead ---------------------------------------------------- -->
+      <header class="mast">
+        <div class="mast-row">
+          <div class="mast-left">
+            <h1 class="mast-name">BookMaker</h1>
+            <p class="mast-tagline">
+              Impose a PDF into <em>pliegos</em> (signatures) — a print-ready
+              booklet you fold, stack and bind into a book.
+            </p>
+          </div>
+          <div class="mast-right">
+            <span class="meta-pair"><span class="meta-k">Tool</span><span class="meta-v">imposition</span></span>
+            <span class="meta-pair"><span class="meta-k">In</span><span class="meta-v">PDF</span></span>
+            <span class="meta-pair"><span class="meta-k">Out</span><span class="meta-v">PDF · print-ready</span></span>
+            <span class="meta-pair"><span class="meta-k">Bind</span><span class="meta-v">saddle-stitch</span></span>
+          </div>
+        </div>
+
+        <div class="now">
+          <span class="now-dot" aria-hidden="true"></span>
+          <span class="now-tag">LOCAL</span>
+          <span class="now-text">Everything runs in your browser — the file never leaves this page.</span>
+        </div>
       </header>
 
-      <section class="block" aria-label="Upload">
-        <h2 class="block-title"><span class="n">01</span> input</h2>
-        <div id="drop" class="dropzone">
-          <input id="file" type="file" accept="application/pdf,.pdf" hidden />
-          <p class="drop-title">drop a PDF here</p>
-          <p class="drop-or">— or —</p>
-          <button type="button" id="chooseBtn" class="btn">choose file</button>
-          <p id="fileInfo" class="drop-sub">no file selected</p>
+      <!-- Index: the tool as a numbered editorial index --------------- -->
+      <section class="index" aria-label="Options">
+        <div class="index-head">
+          <span>№</span>
+          <span>STEP</span>
+          <span>SETTING</span>
         </div>
-      </section>
 
-      <section class="block options" aria-label="Options">
-        <h2 class="block-title"><span class="n">02</span> options</h2>
-
-        <div class="option">
-          <span class="option-label">pages per pliego</span>
-          <div class="segmented" id="sigSize" role="radiogroup" aria-label="Pages per pliego">
-            <button type="button" data-value="8" role="radio" aria-checked="false">8</button>
-            <button type="button" data-value="12" role="radio" aria-checked="false">12</button>
-            <button type="button" data-value="16" role="radio" aria-checked="true" class="active">16</button>
+        <div class="rows">
+          <!-- 01 input -->
+          <div class="row">
+            <span class="c-num">01</span>
+            <span class="c-step">input</span>
+            <div class="c-set">
+              <div id="drop" class="dropzone">
+                <input id="file" type="file" accept="application/pdf,.pdf" hidden />
+                <span class="drop-title">drop a PDF here</span>
+                <span class="drop-or">or</span>
+                <button type="button" id="chooseBtn" class="btn">choose file</button>
+                <span id="fileInfo" class="drop-sub">no file selected</span>
+              </div>
+            </div>
           </div>
-          <p class="hint">each pliego = <span id="sheetsPerSig">4</span> folded sheet(s)</p>
-        </div>
 
-        <div class="option">
-          <span class="option-label">sheet size</span>
-          <div class="segmented" id="layout" role="radiogroup" aria-label="Sheet size">
-            <button type="button" data-value="spread" role="radio" aria-checked="true" class="active">
-              keep page size
-            </button>
-            <button type="button" data-value="fit" role="radio" aria-checked="false">
-              fit same paper
-            </button>
+          <!-- 02 pliego -->
+          <div class="row">
+            <span class="c-num">02</span>
+            <span class="c-step">pliego</span>
+            <div class="c-set">
+              <div class="segmented" id="sigSize" role="radiogroup" aria-label="Pages per pliego">
+                <button type="button" data-value="8" role="radio" aria-checked="false">8</button>
+                <button type="button" data-value="12" role="radio" aria-checked="false">12</button>
+                <button type="button" data-value="16" role="radio" aria-checked="true" class="active">16</button>
+              </div>
+              <span class="row-note">pages per pliego · <span id="sheetsPerSig">4</span> folded sheet(s)</span>
+            </div>
           </div>
-          <p class="hint" id="layoutHint">
-            double-width sheet (e.g. A4 → A3 landscape); pages stay full size
-          </p>
+
+          <!-- 03 sheet -->
+          <div class="row">
+            <span class="c-num">03</span>
+            <span class="c-step">sheet</span>
+            <div class="c-set">
+              <div class="segmented" id="layout" role="radiogroup" aria-label="Sheet size">
+                <button type="button" data-value="spread" role="radio" aria-checked="true" class="active">keep page size</button>
+                <button type="button" data-value="fit" role="radio" aria-checked="false">fit same paper</button>
+              </div>
+              <span class="row-note" id="layoutHint">double-width sheet (A4 → A3 landscape); pages stay full size</span>
+            </div>
+          </div>
+
+          <!-- 04 marks -->
+          <div class="row">
+            <span class="c-num">04</span>
+            <span class="c-step">marks</span>
+            <div class="c-set">
+              <label class="check">
+                <input type="checkbox" id="foldGuides" checked />
+                <span>add fold line &amp; crop marks</span>
+              </label>
+            </div>
+          </div>
         </div>
 
-        <div class="option">
-          <label class="check">
-            <input type="checkbox" id="foldGuides" checked />
-            <span>add fold line &amp; crop marks</span>
-          </label>
+        <div class="index-foot">
+          <button id="generate" class="btn btn-accent" disabled>generate booklet ↓</button>
+          <span id="status" class="status" role="status" aria-live="polite"></span>
         </div>
       </section>
 
-      <section class="block actions" aria-label="Generate">
-        <button id="generate" class="btn btn-primary" disabled>generate booklet →</button>
-        <div id="status" class="status" role="status" aria-live="polite"></div>
-      </section>
-
-      <section id="result" class="block result" hidden>
-        <h2 class="block-title"><span class="n">03</span> output</h2>
-        <ul id="summary" class="summary"></ul>
-        <a id="download" class="btn btn-primary download" download>↓ download imposed PDF</a>
-        <details class="howto">
-          <summary>how to print &amp; bind</summary>
-          <ol>
-            <li>print <strong>double-sided</strong> (flip on the short edge)</li>
-            <li>keep sheets in order — every <span id="sheetsPerSig2">4</span> sheets = one pliego</li>
-            <li>fold each pliego in half</li>
-            <li>stack the pliegos in order and bind the spine (staple, sew, or glue)</li>
-          </ol>
-        </details>
+      <!-- Output ------------------------------------------------------ -->
+      <section id="result" class="output" hidden>
+        <div class="out-grid">
+          <div class="out-cover" aria-hidden="true">
+            <span class="out-cover-id">BOOK</span>
+          </div>
+          <div class="out-body">
+            <p class="out-id">OUTPUT</p>
+            <h2 class="out-title">Ready to print</h2>
+            <dl class="out-meta" id="summary"></dl>
+            <a id="download" class="btn btn-accent download" download>↓ download imposed PDF</a>
+            <details class="howto">
+              <summary>how to print &amp; bind</summary>
+              <ol>
+                <li>print <strong>double-sided</strong> (flip on the short edge)</li>
+                <li>keep sheets in order — every <span id="sheetsPerSig2">4</span> sheets = one pliego</li>
+                <li>fold each pliego in half</li>
+                <li>stack the pliegos in order and bind the spine (staple, sew or glue)</li>
+              </ol>
+            </details>
+          </div>
+        </div>
       </section>
 
       <footer class="foot">
-        <p>built with pdf-lib · everything runs client-side</p>
+        <span class="foot-link">bookmaker</span>
+        <span class="foot-sep">·</span>
+        <span>imposition runs client-side</span>
+        <span class="foot-sep">·</span>
+        <span>built with pdf-lib</span>
       </footer>
     </main>
 

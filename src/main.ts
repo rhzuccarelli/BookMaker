@@ -1,6 +1,9 @@
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
-import '@fontsource/jetbrains-mono/700.css';
+import '@fontsource/jetbrains-mono/600.css';
+import '@fontsource/hanken-grotesk/400.css';
+import '@fontsource/hanken-grotesk/500.css';
+import '@fontsource/hanken-grotesk/700.css';
 import './style.css';
 import { imposePdf, type SignatureSize, type LayoutMode, type ImposeResult } from './imposition';
 
@@ -13,11 +16,11 @@ const $ = <T extends HTMLElement>(sel: string): T => {
 const fileInput = $<HTMLInputElement>('#file');
 const drop = $<HTMLDivElement>('#drop');
 const chooseBtn = $<HTMLButtonElement>('#chooseBtn');
-const fileInfo = $<HTMLParagraphElement>('#fileInfo');
+const fileInfo = $<HTMLElement>('#fileInfo');
 const generateBtn = $<HTMLButtonElement>('#generate');
 const statusEl = $<HTMLDivElement>('#status');
 const resultCard = $<HTMLElement>('#result');
-const summary = $<HTMLUListElement>('#summary');
+const summary = $<HTMLElement>('#summary');
 const downloadLink = $<HTMLAnchorElement>('#download');
 const foldGuides = $<HTMLInputElement>('#foldGuides');
 const layoutHint = $<HTMLParagraphElement>('#layoutHint');
@@ -157,9 +160,10 @@ function showResult(result: ImposeResult, originalName: string) {
     ['Blank pages added', String(result.blanksAdded)],
   ];
   for (const [label, value] of rows) {
-    const li = document.createElement('li');
-    li.innerHTML = `<span>${label}</span><strong>${value}</strong>`;
-    summary.appendChild(li);
+    const rowEl = document.createElement('div');
+    rowEl.className = 'm-row';
+    rowEl.innerHTML = `<dt>${label}</dt><dd>${value}</dd>`;
+    summary.appendChild(rowEl);
   }
 
   resultCard.hidden = false;
