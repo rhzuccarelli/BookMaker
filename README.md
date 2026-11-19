@@ -35,6 +35,10 @@ A pliego is `pages ÷ 4` folded sheets (8 → 2 sheets, 12 → 3, 16 → 4).
     pages keep their original size.
   - **Fit same paper** — the sheet is one source page turned landscape with two
     pages scaled to fit (e.g. A4 → two A5 pages on one A4 sheet).
+- **Spine margin** — a binding margin (in mm, e.g. `5`) added on the spine
+  side of every page, next to the fold, leaving room to clamp, sew or glue the
+  pliegos. With *keep page size* the sheet grows by twice the margin; with
+  *fit same paper* the pages shrink slightly to make room.
 - **Fold line & crop marks** — a faint centre fold guide and corner crop ticks.
 
 ## How to print and bind

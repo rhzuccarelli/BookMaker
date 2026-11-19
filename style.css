@@ -359,6 +359,33 @@ body {
   accent-color: var(--color-accent);
 }
 
+/* Number field ------------------------------------------------------ */
+.num-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-mute);
+  width: fit-content;
+}
+
+.num-field input {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  width: 72px;
+  padding: 6px 8px;
+  border: 0.5px solid var(--color-secondary);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--color-primary);
+}
+
+.num-field input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
 /* Index footer ------------------------------------------------------ */
 .index-foot {
   margin-top: 20px;
