@@ -69,7 +69,10 @@
 
   /**
    * Impose a source PDF into a print-ready booklet PDF divided into signatures.
-   * options: { signatureSize: 8|12|16, layout: 'spread'|'fit', foldGuides: bool }
+   * options: { signatureSize: 8|12|16, layout: 'spread'|'fit', foldGuides: bool,
+   *            gutterMm: number }
+   * gutterMm is a binding margin added on the spine side of every page (next
+   * to the fold), leaving room to clamp, sew or glue the pliegos.
    * Returns { bytes, sourcePages, paddedPages, signatures, sheets, blanksAdded }.
    */
   async function imposePdf(input, options) {
@@ -99,24 +102,33 @@
 
     var plan = buildSheetPlan(sourcePages, options.signatureSize);
 
+    var MM_TO_PT = 72 / 25.4;
+    var gutter = Math.max(0, Number(options.gutterMm) || 0) * MM_TO_PT;
+
     var slotW, slotH, sheetW, sheetH;
     if (options.layout === 'spread') {
-      slotW = maxW;
+      // Sheet grows so pages keep their full size plus the binding margin.
+      slotW = maxW + gutter;
       slotH = maxH;
-      sheetW = maxW * 2;
+      sheetW = slotW * 2;
       sheetH = maxH;
     } else {
       sheetW = maxH; // landscape
       sheetH = maxW;
       slotW = sheetW / 2;
       slotH = sheetH;
+      // Pages shrink to make room for the binding margin.
+      if (gutter >= slotW * 0.5) {
+        throw new Error('Binding margin is too large for this page size.');
+      }
     }
 
     for (var si = 0; si < plan.sides.length; si++) {
       var side = plan.sides[si];
       var page = out.addPage([sheetW, sheetH]);
-      var leftSlot = { x: 0, y: 0, w: slotW, h: slotH };
-      var rightSlot = { x: slotW, y: 0, w: slotW, h: slotH };
+      // The spine (fold) is at x = slotW; keep `gutter` clear on each side of it.
+      var leftSlot = { x: 0, y: 0, w: slotW - gutter, h: slotH };
+      var rightSlot = { x: slotW + gutter, y: 0, w: slotW - gutter, h: slotH };
 
       if (side.left !== 0 && embeddedByPage[side.left]) {
         drawInSlot(page, embeddedByPage[side.left], leftSlot);
@@ -159,6 +171,7 @@
       signatures: plan.signatures,
       sheets: plan.sides.length / 2,
       blanksAdded: plan.padded - sourcePages,
+      gutterMm: gutter / MM_TO_PT,
     };
   }
 

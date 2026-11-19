@@ -18,6 +18,7 @@
   var summary = $('#summary');
   var downloadLink = $('#download');
   var foldGuides = $('#foldGuides');
+  var gutterInput = $('#gutter');
   var layoutHint = $('#layoutHint');
   var sheetsPerSig = $('#sheetsPerSig');
   var sheetsPerSig2 = $('#sheetsPerSig2');
@@ -125,11 +126,14 @@
     resultCard.hidden = true;
 
     try {
+      var gutterMm = parseFloat(String(gutterInput.value).replace(',', '.'));
+      if (!isFinite(gutterMm) || gutterMm < 0) gutterMm = 0;
       var buffer = await selectedFile.arrayBuffer();
       var result = await window.imposePdf(buffer, {
         signatureSize: signatureSize,
         layout: layout,
         foldGuides: foldGuides.checked,
+        gutterMm: gutterMm,
       });
       showResult(result, selectedFile.name);
       setStatus('');
@@ -158,6 +162,7 @@
       ['Pliegos (signatures)', String(result.signatures)],
       ['Sheets (printed both sides)', String(result.sheets)],
       ['Blank pages added', String(result.blanksAdded)],
+      ['Spine margin', result.gutterMm > 0 ? +result.gutterMm.toFixed(1) + ' mm' : 'none'],
     ];
     rows.forEach(function (pair) {
       var rowEl = document.createElement('div');
